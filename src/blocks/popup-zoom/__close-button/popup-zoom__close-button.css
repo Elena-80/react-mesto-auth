@@ -1,0 +1,27 @@
+.popup-zoom__close-button {
+  background: transparent url("../../../images/close-icon.svg") no-repeat center;
+  background-size: cover;
+  width: 32px;
+  height: 32px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.3s ease;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+}
+
+.popup-zoom__close-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 767px) {
+  .popup-zoom__close-button {
+    width: 20px;
+    height: 20px;
+    right: 0;
+    top: -36px;
+  }
+}

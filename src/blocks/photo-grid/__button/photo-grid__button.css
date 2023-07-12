@@ -1,0 +1,18 @@
+.photo-grid__button {
+    background: transparent url(../../../images/heart.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 19px;
+    padding: 0;
+    transition: .3s ease;
+    width: 22px;
+    align-self: center;
+}
+
+.photo-grid__button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}

@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0 auto;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #FFFFFF;  
+  max-width: 880px;
+}
