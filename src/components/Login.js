@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Header from "./Header";
+import { useNavigate } from "react-router-dom";
+import SignInForm from "./SignInForm";
 import auth from "../utils/auth.js";
 
 function Login({ handleErrorMessage, onLogin }) {
@@ -25,8 +25,8 @@ function Login({ handleErrorMessage, onLogin }) {
     auth.authorize({email: email, password: password})
       .then(res => {
         if (res.token) localStorage.setItem('token', res.token);
-        onLogin();
-        navigate('/', {replace: true});
+          onLogin(email);
+          navigate('/', {replace: true});
       })
       .catch((err) => {
         const text = err.message || "Что-то пошло не так! Попробуйте еще раз";
@@ -40,39 +40,25 @@ function Login({ handleErrorMessage, onLogin }) {
 
 
   return (
-    <>
-        <Header link = "/sign-up" title = "Регистрация" />
-
-
+  
       <main>
         <div className="signin">
           <h2 className="signin__title">Вход</h2>
-          <form className="signin__form" onSubmit={handleSubmit} noValidate>
-            <input
-              type="email"
-              className="signin__input"
-              placeholder="Email"
-              name="email"
-              value={formValue.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              className="signin__input"
-              placeholder="Пароль"
-              name="password"
-              value={formValue.password}
-              onChange={handleChange}
-              required
-            />
-            <button rype="submit" className="signin__submit-button">
-              Войти
-            </button>
-          </form>
+
+          <SignInForm props={{
+          formValue: formValue,
+          buttonTitle: 'Войти',
+          handleSubmit: handleSubmit,
+          handleChange: handleChange,
+          children: (
+            <>
+            </>
+          ),
+        }}/>
+        
         </div>
       </main>
-    </>
+   
   );
 }
 

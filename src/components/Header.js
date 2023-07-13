@@ -1,31 +1,37 @@
 import logo from "./../images/logo.svg";
 import { Link } from "react-router-dom";
 
-function Header({link, title, email, onClick}) {
+function Header({location, email, onSignOut}) {
 
-  return (
-    <header className="header">
+   return (
+     <header className="header">
       <img className="header__logo" src={logo} alt="Логотип сайта" />
-      {/* {email && 
-        (<div className = "header__item">
-          <div className = "header__email">{email}</div>
-          <Link to = {link} className="header__link" onClick = {onClick}>
-              {title}
-          </Link>
-        </div>
-      )} */}
+         {(location.pathname === "/sign-up") && 
+            <div className = "header__item">
+               <Link to = '/sign-in' className = "header__link">
+                  Войти
+               </Link>
+            </div>
+         }
 
-    <div className = "header__item">
-        <div className = "header__email">{email ? email : ''}</div>
-       
-        <Link to = {link} className={`header__link` + (email ? " header__link_logged" : "")} onClick = {onClick}>
-            {title}
-        </Link>
-    </div>
-    
+         {(location.pathname === "/sign-in") && 
+            <div className = "header__item">
+               <Link to = '/sign-up' className="header__link">
+                  Регистрация
+               </Link>
+            </div>
+         }
 
-    </header>
-  );
+         {(location.pathname === "/") && 
+            <div className = "header__item">
+            <div className = "header__email">{email}</div>
+               <Link to = '/sign-in' className = "header__link header__link_logged" onClick = {onSignOut}>
+                  Выйти
+               </Link>
+            </div>
+         }
+     </header>
+   )
 
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "./Card";
-import Header from "./Header";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
@@ -9,11 +8,10 @@ function Main({ cards, email, onEditProfile, onAddPlace, onEditAvatar, onCardCli
 
   return (
     <>
-    <Header link = "/sign-in" title = "Выйти" email = {email} onClick = {onSignOut}/>
 
     <main>
       <section className="profile">
-        <div className="profile__avatar-container">
+       <div className="profile__avatar-container"> 
           <img
             className="profile__avatar"
             alt ='Аватар пользователя'

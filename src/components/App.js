@@ -1,4 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
@@ -9,25 +13,25 @@ import AddPlacePopup from "./AddPlacePopup";
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import InfoTooltip from "./InfoTooltip";
 import auth from "../utils/auth.js";
 import api from "../utils/api";
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLogged] = React.useState(false);
-  const [infoMessage, setInfoMessage] = React.useState(null);
-  const [email, setEmail] = React.useState("");
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLogged] = useState(false);
+  const [infoMessage, setInfoMessage] = useState(null);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
- React.useEffect(() => {
+ useEffect(() => {
   document.body.style.backgroundColor = "black";
     api.getInitialCards()
       .then((items) => {
@@ -38,7 +42,7 @@ function App() {
       });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
       api.getUserInfo()
         .then((info) => {
             setCurrentUser(info);
@@ -49,7 +53,7 @@ function App() {
   }, []);
 
 
-React.useEffect(() => {
+useEffect(() => {
   const token = localStorage.getItem("token");
   if (token) {
     auth.checkToken(token)
@@ -60,11 +64,12 @@ React.useEffect(() => {
       })
       .catch(console.error);
   }
-}, [navigate]);
+}, []);
 
 
-function onLogin() {
+function onLogin(email) {
   setLogged(true);
+  setEmail(email);
 }
 
 function onSignOut() {
@@ -159,9 +164,15 @@ function handleCardDelete(card) {
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="root">
-            
+
+    <Header 
+      location = {location}
+      email = {email}
+      onSignOut = {onSignOut}
+      />
+       
         <Routes>
-   
+       
           <Route path="/" element = {
               <ProtectedRoute 
                   component = {Main}
